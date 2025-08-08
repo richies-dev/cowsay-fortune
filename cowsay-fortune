@@ -1,0 +1,32 @@
+#!/bin/bash
+while true; do
+	
+	# Pick a random cow file
+	cow=$(find ~/Desktop/cowsay-files/cows | grep "\.cow$" | shuf -n 1);
+	fsz=3500;  # The max file of a .cow file for it to be used
+	timeout=20; # Time until the script refreshes
+	# Get the size of the selected cow file
+	cow_size=$(wc -c < "$cow");
+	
+	# Check if the cow file size is greater than the threshold
+	while [ "$cow_size" -gt "$fsz" ]; do
+	    cow=$(find ~/Desktop/cowsay-files/cows | grep "\.cow$" | shuf -n 1);
+	    cow_size=$(wc -c < "$cow"); 
+	done
+	sleep 0
+	
+	    clear;
+	    ./now; # Call the neighboring ./now script to display weather/date/time
+	    fortune -n 500 | cowsay -f "$cow";
+	    echo "Using ""$(basename $cow) - ${cow_size}B";
+	    # Countdown loop
+	    count=$timeout;
+	    while (( count >= 0 )); do
+	        echo -en "  ${count}s remaining\r";
+	        ((count--));
+	        sleep 1;
+	    done;
+	
+	    # Sleep for 1 second before refreshing
+	    sleep 1.0;
+done;
