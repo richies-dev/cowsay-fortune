@@ -1,0 +1,41 @@
+#!/bin/bash
+
+DateColumn=27 # Default is 27 for 80 character line, 34 for 92 character line
+DateRow=6
+
+# Display weather
+curl https://wttr.in/california\?0 --silent --max-time 3 
+
+# Save cursor pos
+tput sc
+
+# Move up x lines
+i=0
+while [ $((++i)) -lt $DateRow ]; do tput cuu1; done
+
+# Move cursor right
+tput cuf $DateColumn;
+
+cal | while IFS= read -r line; do
+	echo $line
+	# For every line of the cal, move the cursor right
+	tput cuf $DateColumn;
+done
+
+# Just some empty space to make the time not cut off
+echo ""
+
+# Display the date like normal.
+if hash toilet 2>/dev/null; then
+    echo $(date +"%I:%M %P") | figlet > /tmp/terminal
+    date +"%I:%M %P" | figlet -f "contessa" > /tmp/terminal
+else
+    date +"%I:%M %P" > /tmp/terminal
+fi
+
+while IFS= read -r Time; do
+    printf "%s" "$Time"
+    tput cud1               # Up one line
+done < /tmp/terminal
+
+exit 0
