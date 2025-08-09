@@ -1,18 +1,14 @@
 #!/bin/bash
+
 while true; do
 	
-	# Pick a random cow file
-	cow=$(find ./cowsay-files/cows | grep "\.cow$" | shuf -n 1);
-	fsz=3500;  # The max file of a .cow file for it to be used
+	fsz=3500;  # The max file size of a .cow file for it to be used
 	timeout=20; # Time until the script refreshes
-	# Get the size of the selected cow file
+
+	# Find a cow file less than the threashold in bytes
+	cow=$(find ./cowsay-files/cows -size "-${fsz}c" | grep "\.cow$" | shuf -n 1)
 	cow_size=$(wc -c < "$cow");
-	
-	# Check if the cow file size is greater than the threshold
-	while [ "$cow_size" -gt "$fsz" ]; do
-	    cow=$(find ./cowsay-files/cows | grep "\.cow$" | shuf -n 1)
-	    cow_size=$(wc -c < "$cow"); #echo "$cow $cow_size"
-	done
+
 	sleep 0
 	
 	    clear;
