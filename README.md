@@ -2,6 +2,8 @@
 
 This project contains two simple scripts that I use to display a weather report, date, time, and a fortune and some ascii art using the cowsay command.
 
+![example image](./images/default_output.png)
+
 ## Dependencies
 
 Ensure you have the `fortune`, `cowsay`, and the `figlet` command installed along with figlet's `contessa` font. You will also need to install cowsay-files next to these scripts.
