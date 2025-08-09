@@ -1,14 +1,16 @@
 #!/bin/bash
 
-use_cow=${1} # A cowfile to use instead of finding one automatically
-fsz=3500;    # The max file size of a .cow file for it to be used
-timeout=20;  # Time until the script refreshes
+use_cow=${1} 		# A cowfile to use instead of finding one automatically
+max_cow_sz=3500;   	# The max file size in bytes of a .cow file for it to be used
+max_fortune_sz=1000;	# The max fortune size in characters
+timeout=20;  		# Time until the script refreshes
+
 
 while true; do
 
 	if [ "$use_cow" = "" ]; then
 		# Find a cow file less than the threashold in bytes
-		cow=$(find ./cowsay-files/cows -size "-${fsz}c" | grep "\.cow$" | shuf -n 1);
+		cow=$(find ./cowsay-files/cows -size "-${max_cow_sz}c" | grep "\.cow$" | shuf -n 1);
 	else
 		cow=$use_cow;
 	fi
@@ -18,7 +20,7 @@ while true; do
 	sleep 0;
 	clear;
 	./now; # Call the neighboring ./now script to display weather/date/time
-	fortune -n 500 | cowsay -f "$cow";
+	fortune -s -n "${max_fortune_sz}" | cowsay -f "$cow";
 	echo "Using ""$(basename $cow) - ${cow_size}B";
 	# Countdown loop
 	count=$timeout;
