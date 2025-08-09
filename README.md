@@ -1,6 +1,6 @@
 # cowsay-fortune
 
-This project contains two simple scripts that I use to display a weather report, date, time, and a fortune and some ascii art using the cowsay command.
+This project contains two simple scripts that I use to display a weather report, date, time, and a fortune plus some ascii art using the cowsay command.
 
 ![example image](./images/default_output.png)
 
